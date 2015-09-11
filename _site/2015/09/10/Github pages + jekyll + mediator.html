@@ -1,0 +1,105 @@
+<h1>Github pages + jekyll + mediator</h1>
+
+<p>저는 ruby를 한 번도 사용해보지 않았지만,</p>
+
+<p>검색만으로 설치 및 사용이 가능한 조합이라 이 세가지를 선택하였습니다.</p>
+
+<p>이 글은 MacOS 기준으로 작성되었습니다.</p>
+
+<h2>ruby 설치</h2>
+
+<h3>rbenv 설치</h3>
+
+<p>Homebrew를 사용하여 설치
+<code>
+$brew update
+$brew install rbenv ruby-build
+</code>
+rbenv를 설치한 후에 rbenv의 shims를 PATH에 추가해 주어야 함.</p>
+
+<p><code>
+if which rbenv &gt; /dev/null; then eval &quot;$(rbenv init -)&quot;; fi
+</code></p>
+
+<p>를 .bashrc 또는 .zshrc에 추가</p>
+
+<p>더 자세한 내용은 <a href="https://github.com/sstephenson/rbenv">rbenv github</a> 참조</p>
+
+<h3>rbenv를 통해 ruby 설치</h3>
+<div class="highlight"><pre><code class="language-text" data-lang="text">$rbenv install -l
+</code></pre></div>
+<p>을 실행하면 설치가능한 ruby 목록이 출력됨. 원하는 버전 확인하여 아래와 같이 설치.</p>
+
+<p>이 글에서는 2.0.0-p647을 설치.</p>
+<div class="highlight"><pre><code class="language-text" data-lang="text">$rbenv install 2.0.0-p647
+</code></pre></div>
+<p>ruby가 설치 되면 설치된 ruby를 기본 ruby로 사용할 수 있도록 변경.</p>
+<div class="highlight"><pre><code class="language-text" data-lang="text">$rbenv global 2.0.0-p647
+$rbenv rehash
+$ruby -v
+</code></pre></div>
+<p><code>rbenv rehash</code>를 생략하고 싶다면 <a href="https://github.com/sstephenson/rbenv-gem-rehash">rbenv-gem-rehash</a>를 설치.</p>
+
+<p>이 후로는 <code>rbenv rehash</code>는 생략.</p>
+
+<h3>bundler 설치</h3>
+<div class="highlight"><pre><code class="language-text" data-lang="text">$gem install bundler
+</code></pre></div>
+<h2>jekyll 설치</h2>
+<div class="highlight"><pre><code class="language-text" data-lang="text">$gem install jekyll
+</code></pre></div>
+<p>jekyll이 잘 설치되었는지 확인하려면</p>
+<div class="highlight"><pre><code class="language-text" data-lang="text">$jekyll new test
+$cd test
+$jekyll serve
+</code></pre></div>
+<p>오류 없이 실행이 되면 브라우저를 열고 127.0.0.1:4000 으로 접속</p>
+
+<p>기본 jekyll page가 보이면 설치 완료.</p>
+
+<h2>mediator 테마 사용</h2>
+
+<p>jekyll theme 중 medium과 비슷한 스타일의 theme인 <a href="https://github.com/dirkfabisch/mediator">mediator</a> 적용</p>
+
+<p>github에서 마스터를 clone 또는 zip 파일로 다운로드.</p>
+
+<p>내 github pages 저장소에 올려야하기 때문에 zip 파일로 다운로드하여 사용.</p>
+<div class="highlight"><pre><code class="language-text" data-lang="text">$mkdir blog
+$git init
+$cp -r ~/Download/mediator-master/* .
+$git add --all
+$git commit -m &quot;mediator 파일 추가&quot;
+</code></pre></div>
+<p>블로그를 위한 새로운 git 저장소를 생성하고 다운로드 받은 mediator 파일을 복사하고</p>
+
+<p>git에 저장소에 추가 후 commit</p>
+
+<p>github에 username.github.io로 새로운 repository 생성.(username은 각자의 계정)</p>
+
+<p>github에 push하기 전 mediator가 잘 동작하는지 먼저 확인.</p>
+<div class="highlight"><pre><code class="language-text" data-lang="text">$bundle install
+</code></pre></div>
+<p>물론 안 됨..........</p>
+
+<h3>오류 수정</h3>
+
+<p><strong>celluloid 설치 실패</strong></p>
+
+<p>rubygems.org 검색 결과 celluloid 0.16.1은 존재하지 않음.</p>
+
+<p>Gemfile.lock에서 celluloid의 버전을 0.16.0으로 조정.</p>
+
+<p>상위 버전으로 할 경우는 timers 외에 빠져 있는 종속성을 더 추가해줘야 함.</p>
+
+<p><strong>nokogiri 설치 실패</strong></p>
+
+<p>/usr/include/iconv.h 파일을 찾을 수 없어서 nokogiri를 설치하지 못하는 경우</p>
+
+<p><code>ls /usr/include/iconv.h</code>로 파일이 존재하는지 확인.</p>
+
+<p>파일이 존재하지 않는다면,</p>
+<div class="highlight"><pre><code class="language-text" data-lang="text">$xcode-select --install
+</code></pre></div>
+<p>를 통해 xcode command line tools를 설치</p>
+
+<p>진행 중 위의 2가지를 제외한 오류는 발생하지 않아서 확인하지 못함.</p>
